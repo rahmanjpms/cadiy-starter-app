@@ -23,7 +23,7 @@ export const auth = defineAuth({
           メールアドレス: ${user()} <br>
           仮パスワード: ${code()}<br>
           <br>
-          https://main.d1aagcw7bf6a2t.amplifyapp.com/ <br>
+          リンク： https://main.d1aagcw7bf6a2t.amplifyapp.com/ <br>
           <br>
          `,          
         },
