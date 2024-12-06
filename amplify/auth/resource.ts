@@ -9,13 +9,23 @@ export const auth = defineAuth({
     // email: true,
     email: {
       verificationEmailStyle: "CODE",
-      verificationEmailSubject: "WelCome to Cad App",
+      verificationEmailSubject: "アカウント招待のお知らせ",
       verificationEmailBody: (createCode) => `Use this code to confirm your account: ${createCode()}`,
       //  invaitation mail
       userInvitation: {
-        emailSubject: "WelCome to Cad App",
-        emailBody: (user, code) =>
-          `We're happy to have you! You can now login with username ${user()} and temporary password ${code()}`,
+        emailSubject: "アカウント招待のお知らせ",
+        emailBody: (user, code) =>`
+         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
+          管理者から招待されました<br>
+          ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
+          以下の情報でログインを実施し、パスワードの再設定をお願いします。<br>
+          <br>
+          メールアドレス: ${user()} <br>
+          仮パスワード: ${code()}<br>
+          <br>
+          https://main.d1aagcw7bf6a2t.amplifyapp.com/ <br>
+          <br>
+         `,          
         },
       },
   },
