@@ -6,12 +6,14 @@ import "./index.css";
 import { Amplify } from "aws-amplify";
 import outputs from "../amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
+import authComponent from "./componets/AuthComponents.tsx";
+import formFields from "./componets/FormFields.tsx";
 
 Amplify.configure(outputs);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
-        <Authenticator hideSignUp>
+        <Authenticator components={authComponent} formFields={formFields} hideSignUp>
             <App />
         </Authenticator>
     </React.StrictMode>
