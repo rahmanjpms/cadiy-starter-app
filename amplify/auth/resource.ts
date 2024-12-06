@@ -23,8 +23,10 @@ export const auth = defineAuth({
           メールアドレス: ${user()} <br>
           仮パスワード: ${code()}<br>
           <br>
-          リンク： https://main.d1aagcw7bf6a2t.amplifyapp.com/ <br>
+          URL： https://main.d1aagcw7bf6a2t.amplifyapp.com/ <br>
           <br>
+          認証コードの有効期限は7日間になります。<br>
+          期限を過ぎると記載のURLから登録できなくなるのでご注意ください。<br>
          `,          
         },
       },
