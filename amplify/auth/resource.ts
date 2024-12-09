@@ -8,9 +8,19 @@ export const auth = defineAuth({
   loginWith: {
     // email: true,
     email: {
-      //verificationEmailStyle: "CODE",
-      //verificationEmailSubject: "アカウント招待のお知らせ",
-      //verificationEmailBody: (createCode) => `Use this code to confirm your account: ${createCode()}`,
+      verificationEmailStyle: "CODE",
+      verificationEmailSubject: "アカウントアクティベーションのお知らせ",
+      verificationEmailBody: (createCode) => `
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
+          アクティベーション<br>
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
+        この番号で、承認を行ってください。${createCode()}
+        <br>
+        URL： https://main.d1aagcw7bf6a2t.amplifyapp.com/ <br>
+        <br>
+        認証コードの有効期限は7日間になります。<br>
+        期限を過ぎると記載のURLから登録できなくなるのでご注意ください。<br>
+       `,
       //  invaitation mail
       userInvitation: {
         emailSubject: "アカウント招待のお知らせ",
