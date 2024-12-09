@@ -3,6 +3,7 @@ import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
 import { GetListUser } from "./singUp/listUsers";
+import { CreateAppUser } from "./singUp/createUsers";
 
 const client = generateClient<Schema>();
 
@@ -45,11 +46,10 @@ function App() {
         }
 
         try {
-            const objList = new GetListUser("ap-southeast-2_6Dp8uDJA8");
+            const objCreateUser = new CreateAppUser("ap-southeast-2_6Dp8uDJA8");
             const createUser = async () => {
-                return objList.createInviteUserMutation("tulumrah@hotmail.com", "Rahman", "tulu");
+                return objCreateUser.createInviteUserMutation("tulumrah@hotmail.com", "Rahman", "tulu");
             };
-
             createUser();
             console.log("OK:User ......");
         } catch {
