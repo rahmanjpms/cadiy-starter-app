@@ -59,8 +59,12 @@ function App() {
             const createUser = async () => {
                 return objCreateUser.createInviteUserMutation("tulumrah@hotmail.com", "Rahman", "tulu");
             };
-            createUser();
-            console.log("OK:User ......");
+            const msg = createUser();
+            msg.then(() => {
+                console.log("OK:User ......");
+            }).catch((resonError) => {
+                console.log(resonError);
+            });
         } catch {
             console.log("Error:User");
         }

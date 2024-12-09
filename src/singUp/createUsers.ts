@@ -34,6 +34,9 @@ export class CreateAppUser{
       };
     } catch (err) {
       console.log("User Create : " + err);
+      return {
+        message: "Creation : Failed",
+      };
     }
   }
 }
