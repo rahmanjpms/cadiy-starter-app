@@ -44,7 +44,16 @@ function App() {
         } catch {
             console.log("Error");
         }
+    }
 
+    function deleteTodo(id: string) {
+        client.models.Todo.delete({ id });
+    }
+
+    /**
+     *
+     */
+    const createUser = async () => {
         try {
             const objCreateUser = new CreateAppUser("ap-southeast-2_6Dp8uDJA8");
             const createUser = async () => {
@@ -55,14 +64,10 @@ function App() {
         } catch {
             console.log("Error:User");
         }
-    }
+    };
 
-    function deleteTodo(id: string) {
-        client.models.Todo.delete({ id });
-    }
     return (
         <main>
-            <>{name && name.length > 0 && <button>Create User</button>}</>
             <h1>{name}</h1>
             <button onClick={signOut}>Sign out</button>
             <h1>My todos</h1>
@@ -78,6 +83,7 @@ function App() {
                     </>
                 ))}
             </ul>
+            <>{name && name.length > 0 && <button onClick={createUser}>Create User</button>}</>
         </main>
     );
 }
