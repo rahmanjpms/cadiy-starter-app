@@ -17,12 +17,8 @@ export class CreateAppUser{
       Username: email,
       UserAttributes: [
         {
-          Name: "family_name",
-          Value: familyName,
-        },
-        {
-          Name: "given_name",
-          Value: givenName,
+           Name: "email",
+           Value: email,
         },
       ],
     };
@@ -30,7 +26,7 @@ export class CreateAppUser{
     try {
       await client.send(new AWS.AdminCreateUserCommand(input));
       return {
-        message: `Created ${familyName}`,
+        message: `Created ${familyName} ${givenName}`,
       };
     } catch (err) {
       console.log("User Create : " + err);
