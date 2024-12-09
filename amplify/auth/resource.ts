@@ -8,9 +8,9 @@ export const auth = defineAuth({
   loginWith: {
     // email: true,
     email: {
-      verificationEmailStyle: "CODE",
-      verificationEmailSubject: "アカウント招待のお知らせ",
-      verificationEmailBody: (createCode) => `Use this code to confirm your account: ${createCode()}`,
+      //verificationEmailStyle: "CODE",
+      //verificationEmailSubject: "アカウント招待のお知らせ",
+      //verificationEmailBody: (createCode) => `Use this code to confirm your account: ${createCode()}`,
       //  invaitation mail
       userInvitation: {
         emailSubject: "アカウント招待のお知らせ",
