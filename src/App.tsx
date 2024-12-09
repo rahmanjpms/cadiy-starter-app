@@ -31,6 +31,7 @@ function App() {
 
     function createTodo() {
         client.models.Todo.create({ content: window.prompt("Todo content") });
+
         try {
             const objList = new GetListUser("ap-southeast-2_6Dp8uDJA8");
             const lst = async () => {
@@ -42,6 +43,18 @@ function App() {
         } catch {
             console.log("Error");
         }
+
+        try {
+            const objList = new GetListUser("ap-southeast-2_6Dp8uDJA8");
+            const createUser = async () => {
+                return objList.createInviteUserMutation("tulumrah@hotmail.com", "Rahman", "tulu");
+            };
+
+            createUser();
+            console.log("OK:User ......");
+        } catch {
+            console.log("Error:User");
+        }
     }
 
     function deleteTodo(id: string) {
@@ -49,6 +62,7 @@ function App() {
     }
     return (
         <main>
+            <>{name && name.length > 0 && <button>Create User</button>}</>
             <h1>{name}</h1>
             <button onClick={signOut}>Sign out</button>
             <h1>My todos</h1>
