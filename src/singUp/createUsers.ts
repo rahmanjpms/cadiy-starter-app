@@ -26,10 +26,11 @@ export class CreateAppUser{
     try {
       await client.send(new AWS.AdminCreateUserCommand(input));
       return {
-        message: `Created ${familyName} ${givenName}`,
+        message: null,
       };
     } catch (err) {
-      console.log("User Create : " + err);
+      console.log(`Failed :  ${familyName} + ${givenName} ` )
+      console.log("Error : " + err);
       return {
         message: "Creation : Failed",
       };
