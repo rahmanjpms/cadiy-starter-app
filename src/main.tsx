@@ -11,7 +11,7 @@ import formFields from "./componets/FormFields.tsx";
 
 Amplify.configure(outputs);
 
-const debug = true;
+const debug = false;
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
