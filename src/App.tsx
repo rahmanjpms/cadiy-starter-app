@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
+import { GetListUser } from "./singUp/listUsers";
 
 const client = generateClient<Schema>();
 
@@ -30,6 +31,17 @@ function App() {
 
     function createTodo() {
         client.models.Todo.create({ content: window.prompt("Todo content") });
+        try {
+            const objList = new GetListUser("ap-southeast-2_6Dp8uDJA8");
+            const lst = async () => {
+                return objList.getList();
+            };
+
+            lst();
+            console.log("OK......");
+        } catch {
+            console.log("Error");
+        }
     }
 
     function deleteTodo(id: string) {
