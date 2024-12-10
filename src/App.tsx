@@ -57,7 +57,7 @@ function App() {
         try {
             const objCreateUser = new CreateAppUser("ap-southeast-2_6Dp8uDJA8");
             const createUser = async () => {
-                return objCreateUser.createInviteUserMutation("tulumrah@hotmail.com", "Rahman", "tulu");
+                return objCreateUser.createInviteUserMutation2("tulumrah@hotmail.com", "Rahman", "tulu");
             };
             const msg = createUser();
             msg.then(() => {
