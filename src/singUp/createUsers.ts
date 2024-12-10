@@ -2,15 +2,17 @@
 
 import { CognitoIdentityProviderClient, SignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
 
-import config from "../../amplify_outputs.json"
+//import config from "../../amplify_outputs.json"
 
+ 
+ 
 export class CreateAppUser{
   private userPool: string = "";
-  //private region: string = "";
+  private region: string = "";
   
     constructor(upool: string) {
       this.userPool = upool;
-     // this.region = "ap-southeast-2"; 
+      this.region = "ap-southeast-2"; 
     }
  
   
@@ -41,8 +43,9 @@ export class CreateAppUser{
   //   }
   // }
 
+    
   public async createInviteUserMutation2(email: string, familyName: string, givenName: string) {
-    const client = new CognitoIdentityProviderClient(config);
+    const client = new CognitoIdentityProviderClient({ region: this.region });
     const input = {
       ClientId: "6oi5g1pem9hmqh3bs7o24nhphh",
       UserPoolId: this.userPool,
