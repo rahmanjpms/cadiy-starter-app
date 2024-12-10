@@ -15,6 +15,13 @@ const formFields = {
             placeholder: "emailをいれてください",
         },
     },
+
+    forceNewPassword: {
+        password: {
+            label: "パスワード",
+            placeholder: "パスワードをいれてください",
+        },
+    },
 };
 
 export default formFields;
