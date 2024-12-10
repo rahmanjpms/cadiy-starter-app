@@ -3,6 +3,7 @@ const formFields = {
         username: {
             label: "メール",
             placeholder: "emailをいれてください",
+            isRequired: true,
         },
         password: {
             label: "パスワード",
@@ -18,7 +19,11 @@ const formFields = {
 
     forceNewPassword: {
         password: {
-            label: "パスワード",
+            label: "新パスワード",
+            placeholder: "パスワードをいれてください",
+        },
+        confirm_password: {
+            label: "コンファームパスワード",
             placeholder: "パスワードをいれてください",
         },
     },
