@@ -4,6 +4,7 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
 import { GetListUser } from "./singUp/listUsers";
 import { CreateAppUser } from "./singUp/createUsers";
+import { helloCognito } from "./singUp/helloCognito";
 
 const client = generateClient<Schema>();
 
@@ -54,6 +55,15 @@ function App() {
      *
      */
     const createUser = async () => {
+        try {
+            const result = await helloCognito();
+            if (result) {
+                console.log(result.join("\n"));
+            }
+        } catch {
+            console.log("Error:helloCognito");
+        }
+
         try {
             const objCreateUser = new CreateAppUser("ap-southeast-2_6Dp8uDJA8");
             const createUser = async () => {

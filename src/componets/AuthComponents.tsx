@@ -1,4 +1,4 @@
-import { ThemeProvider, Image, useTheme, View, Theme, Heading } from "@aws-amplify/ui-react";
+import { ThemeProvider, Button, Image, useTheme, View, Theme, Heading, useAuthenticator } from "@aws-amplify/ui-react";
 
 const authComponent = {
     Header() {
@@ -53,14 +53,34 @@ const authComponent = {
     },
     SignIn: {
         Header() {
-            // SignInの箱の中のヘッダーを初期化
-            return <div></div>;
+            const { tokens } = useTheme();
+            return (
+                <Heading padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`} level={3}>
+                    サインイン
+                </Heading>
+            );
+        },
+
+        Footer() {
+            const { toForgotPassword } = useAuthenticator();
+
+            return (
+                <View textAlign="center">
+                    <Button fontWeight="normal" onClick={toForgotPassword} size="small" variation="link">
+                        リセットパスワード
+                    </Button>
+                </View>
+            );
         },
     },
     ForgotPassword: {
         Header() {
-            // ForgotPasswordの箱の中のヘッダーを初期化
-            return <div></div>;
+            const { tokens } = useTheme();
+            return (
+                <Heading padding={`${tokens.space.xl} 0 0 ${tokens.space.xl}`} level={3}>
+                    Enter Information:
+                </Heading>
+            );
         },
     },
 
