@@ -1,10 +1,16 @@
+import type { CustomMessageTriggerHandler } from "aws-lambda";
 
+export const handler: CustomMessageTriggerHandler = async (event) => {
+    if (!event.triggerSource) {
+        console.log("missing triggerSource parameter");
+        return;
+    }
 
-import type { CustomMessageTriggerHandler} from "aws-lambda";
-
-export const handler:CustomMessageTriggerHandler = async (event) => {
-     
     switch (event.triggerSource) {
+        case "CustomMessage_ForgotPassword":
+            event.response.emailMessage = `Your new one-time code is ${event.request.codeParameter}`;
+            event.response.emailSubject = "Reset my password";
+            break;
         case "CustomMessage_SignUp":
             event.response.emailMessage = `
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
@@ -21,12 +27,11 @@ export const handler:CustomMessageTriggerHandler = async (event) => {
             期限を過ぎると記載のURLから登録できなくなるのでご注意ください。<br>
             <br>
             `;
-        event.response.emailSubject = "アカウント招待のお知らせ";
+            event.response.emailSubject = "アカウント招待のお知らせ";
             break;
-        
-        default:
-        break;
 
+        default:
+            break;
     }
     return event;
 };

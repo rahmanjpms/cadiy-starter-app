@@ -31,7 +31,7 @@ function App() {
         }
     }, [user]);
 
-    function createTodo() {
+    async function createTodo() {
         client.models.Todo.create({ content: window.prompt("Todo content") });
 
         try {
@@ -43,9 +43,12 @@ function App() {
                 }).catch((resonError) => {
                     console.log(resonError + " : List");
                 });
+
+                return data;
             };
-            lst();
-            console.log("OK......");
+
+            const result = await lst();
+            console.log(result?.message);
         } catch {
             console.log("Error");
         }
