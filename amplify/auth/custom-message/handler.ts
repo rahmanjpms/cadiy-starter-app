@@ -14,7 +14,7 @@ export const handler: CustomMessageTriggerHandler = async (event) => {
         case "CustomMessage_SignUp":
             event.response.emailMessage = `
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
-            管理者から招待されました<br>
+            管理者から招待されました(v:1)<br>
             ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
             以下の情報でログインを実施し、パスワードの再設定をお願いします。<br>
             <br>
