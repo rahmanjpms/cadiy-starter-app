@@ -37,9 +37,13 @@ function App() {
         try {
             const objList = new GetListUser("ap-southeast-2_6Dp8uDJA8");
             const lst = async () => {
-                return objList.getList();
+                const data = objList.getList();
+                data.then(() => {
+                    console.log("OK:list ......");
+                }).catch((resonError) => {
+                    console.log(resonError + " : List");
+                });
             };
-
             lst();
             console.log("OK......");
         } catch {
