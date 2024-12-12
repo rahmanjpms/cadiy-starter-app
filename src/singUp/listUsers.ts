@@ -1,5 +1,4 @@
 import * as AWS from "@aws-sdk/client-cognito-identity-provider";
-
 import { USER_POOL, ACCOUNT_REGION } from "./constants";
 
 export class GetListUser {

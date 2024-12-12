@@ -4,6 +4,9 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
 import { GetListUser } from "./singUp/listUsers";
 import { CreateAppUser } from "./singUp/createUsers";
+import { TEMP_EMAIL_ID } from "./singUp/constants";
+import { confirmSignUp } from "./singUp/confirmSignUp";
+import { resendConfirmationCode } from "./singUp/resendConfirmationCode";
 
 const client = generateClient<Schema>();
 
@@ -62,9 +65,9 @@ function App() {
      */
     const createUser = async () => {
         try {
-            const objCreateUser = new CreateAppUser("ap-southeast-2_6Dp8uDJA8");
+            const objCreateUser = new CreateAppUser();
             const createUser = async () => {
-                return objCreateUser.createInviteUserMutation2("tulumrah@hotmail.com", "Rahman", "tulu");
+                return objCreateUser.createInviteUserMutation(TEMP_EMAIL_ID, "Rahman", "tulu");
             };
             const msg = createUser();
             msg.then(() => {
@@ -74,6 +77,23 @@ function App() {
             });
         } catch {
             console.log("Error:User");
+        }
+    };
+
+    const confirmUser = async () => {
+        try {
+            await confirmSignUp("652026");
+        } catch {
+            console.log("Error:confirmSignUp");
+        }
+    };
+
+    const resendCode = async () => {
+        try {
+            const result = await resendConfirmationCode();
+            console.log(result);
+        } catch {
+            console.log("Error: resendConfirmationCode");
         }
     };
 
@@ -95,6 +115,8 @@ function App() {
                 ))}
             </ul>
             <>{name && name.length > 0 && <button onClick={createUser}>Create User</button>}</>
+            <div>{name && name.length > 0 && <button onClick={confirmUser}>Confirm User</button>}</div>
+            <div>{name && name.length > 0 && <button onClick={resendCode}>Resend Code</button>}</div>
         </main>
     );
 }
