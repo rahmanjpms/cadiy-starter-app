@@ -4,12 +4,10 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
 import { GetListUser } from "./singUp/listUsers";
 import { CreateAppUser } from "./singUp/createUsers";
-import { helloCognito } from "./singUp/helloCognito";
 
 const client = generateClient<Schema>();
 
 function App() {
-    //const { signOut } = useAuthenticator();
     const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
     const [name, setName] = useState<string>("");
@@ -34,8 +32,10 @@ function App() {
     async function createTodo() {
         client.models.Todo.create({ content: window.prompt("Todo content") });
 
+        console.log("List User ");
+
         try {
-            const objList = new GetListUser("ap-southeast-2_6Dp8uDJA8");
+            const objList = new GetListUser();
             const lst = async () => {
                 const data = objList.getList();
                 data.then(() => {
@@ -47,10 +47,9 @@ function App() {
                 return data;
             };
 
-            const result = await lst();
-            console.log(result?.message);
+            await lst();
         } catch {
-            console.log("Error");
+            console.log("Error :  GetListUser");
         }
     }
 
@@ -62,15 +61,6 @@ function App() {
      *
      */
     const createUser = async () => {
-        try {
-            const result = await helloCognito();
-            if (result) {
-                console.log(result.join("\n"));
-            }
-        } catch {
-            console.log("Error:helloCognito");
-        }
-
         try {
             const objCreateUser = new CreateAppUser("ap-southeast-2_6Dp8uDJA8");
             const createUser = async () => {
