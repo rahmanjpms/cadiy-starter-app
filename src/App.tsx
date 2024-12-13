@@ -106,6 +106,8 @@ export default function App() {
         //     console.log("Error: Hello Lamda");
         // }
 
+        await client.models.Todo.create({ content: "test456" });
+
         const { data: todos } = await client.models.Todo.list();
         todos.map((todo) => {
             console.log(todo.content);
