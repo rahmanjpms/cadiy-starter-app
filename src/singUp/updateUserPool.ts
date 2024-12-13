@@ -14,6 +14,9 @@ export const addPreSignUpHandler = async () => {
         const command = new AWS.UpdateUserPoolCommand({
             UserPoolId: USER_POOL,
             AutoVerifiedAttributes: ["email"],
+            UserAttributeUpdateSettings: {
+                AttributesRequireVerificationBeforeUpdate: ["email"],
+            },
         });
 
         const response = await cognitoClient.send(command);
