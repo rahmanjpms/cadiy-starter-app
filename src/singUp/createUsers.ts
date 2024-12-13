@@ -1,7 +1,6 @@
 import { CognitoIdentityProviderClient, SignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
 import { addPreSignUpHandler } from "./updateUserPool";
 import { USER_POOL, ACCOUNT_REGION, CLIENT_ID, TEMP_EMAIL_PASSWORD } from "./constants";
-
 export class CreateAppUser {
     constructor() {}
 
@@ -29,6 +28,12 @@ export class CreateAppUser {
             const response = await client.send(command);
 
             if (response) {
+                try {
+                    response.UserConfirmed = true;
+                } catch {
+                    console.log("Error in Confirmaiton");
+                }
+
                 try {
                     const responseUpdate = await addPreSignUpHandler();
                     if (responseUpdate) {
