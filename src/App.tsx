@@ -3,9 +3,10 @@ import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
 import { GetListUser } from "./singUp/listUsers";
-import { CreateAppUser } from "./singUp/createUsers";
-import { TEMP_EMAIL_ID } from "./singUp/constants";
+//import { CreateAppUser } from "./singUp/createUsers";
+import { ACCOUNT_REGION } from "./singUp/constants";
 import { confirmSignUp } from "./singUp/confirmSignUp";
+import CognitoUserManager from "./singUp/cogntioUserCreateManager";
 //import { resendConfirmationCode } from "./singUp/resendConfirmationCode";
 
 //import { helloDynamoDB } from "./dynamoDB/helloDynamoDB";
@@ -67,20 +68,23 @@ export default function App() {
      *
      */
     const createUser = async () => {
-        try {
-            const objCreateUser = new CreateAppUser();
-            const createUser = async () => {
-                return objCreateUser.createInviteUserMutation(TEMP_EMAIL_ID, "Rahman", "tulu");
-            };
-            const msg = createUser();
-            msg.then(() => {
-                console.log("OK:User ......");
-            }).catch((resonError) => {
-                console.log(resonError);
-            });
-        } catch {
-            console.log("Error:User");
-        }
+        // try {
+        //     const objCreateUser = new CreateAppUser();
+        //     const createUser = async () => {
+        //         return objCreateUser.createInviteUserMutation(TEMP_EMAIL_ID, "Rahman", "tulu");
+        //     };
+        //     const msg = createUser();
+        //     msg.then(() => {
+        //         console.log("OK:User ......");
+        //     }).catch((resonError) => {
+        //         console.log(resonError);
+        //     });
+        // } catch {
+        //     console.log("Error:User");
+        // }
+
+        const userManager = new CognitoUserManager(ACCOUNT_REGION);
+        await userManager.exampleUserCreation();
     };
 
     const confirmUser = async () => {
