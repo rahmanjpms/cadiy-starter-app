@@ -1,8 +1,6 @@
-//import * as AWS from "@aws-sdk/client-cognito-identity-provider";
-
 import { CognitoIdentityProviderClient, SignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
 import { addPreSignUpHandler } from "./updateUserPool";
-import { USER_POOL, ACCOUNT_REGION, CLIENT_ID } from "./constants";
+import { USER_POOL, ACCOUNT_REGION, CLIENT_ID, TEMP_EMAIL_PASSWORD } from "./constants";
 
 export class CreateAppUser {
     constructor() {}
@@ -13,7 +11,7 @@ export class CreateAppUser {
             ClientId: CLIENT_ID,
             UserPoolId: USER_POOL,
             Username: email,
-            Password: "Ankon$1968$Akhi",
+            Password: TEMP_EMAIL_PASSWORD,
             UserAttributes: [
                 {
                     Name: "email",

@@ -6,11 +6,14 @@ import { GetListUser } from "./singUp/listUsers";
 import { CreateAppUser } from "./singUp/createUsers";
 import { TEMP_EMAIL_ID } from "./singUp/constants";
 import { confirmSignUp } from "./singUp/confirmSignUp";
-import { resendConfirmationCode } from "./singUp/resendConfirmationCode";
+//import { resendConfirmationCode } from "./singUp/resendConfirmationCode";
+
+//import { helloDynamoDB } from "./dynamoDB/helloDynamoDB";
+//import { helloLambda } from "./lambda/helloLabda";
 
 const client = generateClient<Schema>();
 
-function App() {
+export default function App() {
     const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
     const [name, setName] = useState<string>("");
@@ -82,19 +85,31 @@ function App() {
 
     const confirmUser = async () => {
         try {
-            await confirmSignUp("652026");
+            await confirmSignUp("816926");
         } catch {
             console.log("Error:confirmSignUp");
         }
     };
 
     const resendCode = async () => {
-        try {
-            const result = await resendConfirmationCode();
-            console.log(result);
-        } catch {
-            console.log("Error: resendConfirmationCode");
-        }
+        // try {
+        //     const result = await resendConfirmationCode();
+        //     console.log(result);
+        // } catch {
+        //     console.log("Error: resendConfirmationCode");
+        // }
+
+        //helloLambda
+        // try {
+        //     await helloLambda();
+        // } catch {
+        //     console.log("Error: Hello Lamda");
+        // }
+
+        const { data: todos } = await client.models.Todo.list();
+        todos.map((todo) => {
+            console.log(todo.content);
+        });
     };
 
     return (
@@ -120,5 +135,3 @@ function App() {
         </main>
     );
 }
-
-export default App;

@@ -1,4 +1,4 @@
-import React from "react";
+import { StrictMode } from "react";
 import ReactDOM from "react-dom/client";
 import { Authenticator } from "@aws-amplify/ui-react";
 import App from "./App.tsx";
@@ -8,15 +8,20 @@ import outputs from "../amplify_outputs.json";
 import "@aws-amplify/ui-react/styles.css";
 import authComponent from "./componets/AuthComponents.tsx";
 import formFields from "./componets/FormFields.tsx";
+import { DEBUG_MODE } from "./systemConstants.ts";
 
-Amplify.configure(outputs);
+const rootElement = document.getElementById("root");
+if (rootElement !== null) {
+    Amplify.configure(outputs);
+    const root = ReactDOM.createRoot(rootElement);
 
-const debug = true;
-
-ReactDOM.createRoot(document.getElementById("root")!).render(
-    <React.StrictMode>
-        <Authenticator components={authComponent} formFields={formFields} hideSignUp={debug}>
-            <App />
-        </Authenticator>
-    </React.StrictMode>
-);
+    root.render(
+        <StrictMode>
+            <Authenticator components={authComponent} formFields={formFields} hideSignUp={DEBUG_MODE}>
+                <App />
+            </Authenticator>
+        </StrictMode>
+    );
+} else {
+    console.error("Failed to find the root element.");
+}
