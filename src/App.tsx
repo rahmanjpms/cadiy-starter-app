@@ -29,24 +29,12 @@ export default function App() {
 
     const [name, setName] = useState<string>("");
 
-    const [hasTodos, setHasTodos] = useState<boolean>(false);
-
     const { user, signOut } = useAuthenticator();
 
     useEffect(() => {
         client.models.Todo.observeQuery().subscribe({
             next: (data) => setTodos([...data.items]),
         });
-
-        if (todos.length > 0) {
-            for (let i = 0; i < todos.length; i++) {
-                const item = todos[i];
-                if (item.content && item.content.trim().length > 0) {
-                    setHasTodos(true);
-                    break;
-                }
-            }
-        }
 
         const loginID = user?.signInDetails?.loginId;
         if (loginID) {
@@ -60,7 +48,6 @@ export default function App() {
 
     async function createTodo() {
         client.models.Todo.create({ content: window.prompt("Todo content") });
-        console.log("List User ");
 
         /*
         try {
@@ -97,17 +84,6 @@ export default function App() {
 
     function deleteTodo(id: string) {
         client.models.Todo.delete({ id });
-
-        setHasTodos(false);
-        if (todos.length > 0) {
-            for (let i = 0; i < todos.length; i++) {
-                const item = todos[i];
-                if (item.content && item.content.trim().length > 0) {
-                    setHasTodos(true);
-                    break;
-                }
-            }
-        }
     }
 
     /**
@@ -211,23 +187,20 @@ export default function App() {
                 <div>
                     <div>
                         <br></br>
+                        <h1>My todos</h1>
                         <button onClick={createTodo}>+ new</button>
-                        {hasTodos && (
-                            <>
-                                <h1>My todos</h1>
-                                <ul>
-                                    {todos.map((todo) => (
-                                        <>
-                                            {todo.content && todo.content.length > 0 && (
-                                                <li onClick={() => deleteTodo(todo.id)} key={todo.id}>
-                                                    {todo.content}
-                                                </li>
-                                            )}
-                                        </>
-                                    ))}
-                                </ul>
-                            </>
-                        )}
+
+                        <ul>
+                            {todos.map((todo) => (
+                                <>
+                                    {todo.content && todo.content.length > 0 && (
+                                        <li onClick={() => deleteTodo(todo.id)} key={todo.id}>
+                                            {todo.content}
+                                        </li>
+                                    )}
+                                </>
+                            ))}
+                        </ul>
                     </div>
 
                     <div>
