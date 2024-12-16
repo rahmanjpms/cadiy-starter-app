@@ -8,8 +8,8 @@ export const handler: CustomMessageTriggerHandler = async (event) => {
 
     switch (event.triggerSource) {
         case "CustomMessage_ForgotPassword":
-            event.response.emailMessage = `Your new one-time code is ${event.request.codeParameter}`;
-            event.response.emailSubject = "Reset my password";
+            event.response.emailMessage = `承認番号： ${event.request.codeParameter}`;
+            event.response.emailSubject = "パスワードのリセット";
             break;
         case "CustomMessage_SignUp":
             event.response.emailMessage = `
@@ -28,6 +28,16 @@ export const handler: CustomMessageTriggerHandler = async (event) => {
             <br>
             `;
             event.response.emailSubject = "アカウント招待のお知らせ";
+            break;
+
+        case "CustomMessage_ResendCode":
+            event.response.emailMessage = `
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
+            再発行(v:1)<br>
+            ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━<br>
+            承認番号：${event.request.codeParameter}<br>
+            `;
+            event.response.emailSubject = "コードの再発行";
             break;
 
         default:
