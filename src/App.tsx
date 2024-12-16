@@ -2,16 +2,26 @@ import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
-import { GetListUser } from "./singUp/listUsers";
-//import { CreateAppUser } from "./singUp/createUsers";
-import { ACCOUNT_REGION } from "./singUp/constants";
+//import { GetListUser } from "./singUp/listUsers";
+import { CreateAppUser } from "./singUp/createUsers";
+// import { ACCOUNT_REGION } from "./singUp/constants";
+//import { USER_POOL, CLIENT_ID } from "./singUp/constants";
 import { confirmSignUp } from "./singUp/confirmSignUp";
-import CognitoUserManager from "./singUp/cogntioUserCreateManager";
+// import CognitoUserManager from "./singUp/cogntioUserCreateManager";
+//import CognitoAuthService from "./singUp/cognitoAuthService";
+import { TEMP_EMAIL_ID } from "./singUp/constants";
+//import { generatePassword } from "./utilities/utility";
 //import { resendConfirmationCode } from "./singUp/resendConfirmationCode";
 
 //import { helloDynamoDB } from "./dynamoDB/helloDynamoDB";
 //import { helloLambda } from "./lambda/helloLabda";
 
+/*
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import LoginPage from "./loginPage";
+import HomePage from "./homePage";
+import ConfirmUserPage from "./confirmUserPage";
+*/
 const client = generateClient<Schema>();
 
 export default function App() {
@@ -38,9 +48,9 @@ export default function App() {
 
     async function createTodo() {
         client.models.Todo.create({ content: window.prompt("Todo content") });
-
         console.log("List User ");
 
+        /*
         try {
             const objList = new GetListUser();
             const lst = async () => {
@@ -57,7 +67,20 @@ export default function App() {
             await lst();
         } catch {
             console.log("Error :  GetListUser");
+         }
+
+        try {
+            const users = await listCognitoUsers(USER_POOL);
+            // Process and log user information
+            users.forEach((user) => {
+                console.log("User Sub:", user.Username);
+                console.log("User Attributes:", user.Attributes);
+                console.log("User Status:", user.UserStatus);
+            });
+        } catch (error) {
+            console.error("Failed to list users:", error);
         }
+        */
     }
 
     function deleteTodo(id: string) {
@@ -68,28 +91,55 @@ export default function App() {
      *
      */
     const createUser = async () => {
-        // try {
-        //     const objCreateUser = new CreateAppUser();
-        //     const createUser = async () => {
-        //         return objCreateUser.createInviteUserMutation(TEMP_EMAIL_ID, "Rahman", "tulu");
-        //     };
-        //     const msg = createUser();
-        //     msg.then(() => {
-        //         console.log("OK:User ......");
-        //     }).catch((resonError) => {
-        //         console.log(resonError);
-        //     });
-        // } catch {
-        //     console.log("Error:User");
-        // }
+        try {
+            const objCreateUser = new CreateAppUser();
+            const createUser = await objCreateUser.createInviteUserMutation(TEMP_EMAIL_ID, "Rahman", "tulu");
+            new Promise((resolve) => {
+                resolve(createUser);
+            })
+                .then((msg) => {
+                    const msgValue = msg as string;
+                    if (msgValue === "CREATE: OK") {
+                        console.log("OK:User ......");
+                    }
+                })
+                .catch((resonError) => {
+                    console.log(resonError);
+                });
+        } catch {
+            console.log("Error:User");
+        }
 
-        const userManager = new CognitoUserManager(ACCOUNT_REGION);
-        await userManager.exampleUserCreation();
+        /*
+         const userManager = new CognitoUserManager(ACCOUNT_REGION);
+         await userManager.exampleUserCreation();
+
+        try {
+            // Replace with your actual Pool ID and Client ID
+            const authService = new CognitoAuthService(USER_POOL, CLIENT_ID);
+
+            // Signup a new user
+            const signupResult = await authService.signUp({
+                username: "Rahman1",
+                password: generatePassword(),
+                email: TEMP_EMAIL_ID,
+                phoneNumber: "",
+                additionalAttributes: {
+                    "custom:role": "customer",
+                },
+            });
+            console.log("Signup successful:", signupResult);
+            // If you want to confirm the user (e.g., after receiving verification code)
+            // await authService.confirmSignUp('newuser123', 'verification-code');
+        } catch (error) {
+            console.error("Signup error:", error);
+        }
+        */
     };
 
     const confirmUser = async () => {
         try {
-            await confirmSignUp("816926");
+            await confirmSignUp("842065");
         } catch {
             console.log("Error:confirmSignUp");
         }
@@ -135,9 +185,33 @@ export default function App() {
                     </>
                 ))}
             </ul>
-            <>{name && name.length > 0 && <button onClick={createUser}>Create User</button>}</>
-            <div>{name && name.length > 0 && <button onClick={confirmUser}>Confirm User</button>}</div>
-            <div>{name && name.length > 0 && <button onClick={resendCode}>Resend Code</button>}</div>
+
+            {name && name.length > 0 && (
+                <ul>
+                    <li>
+                        <button onClick={createUser}>Create User</button>
+                    </li>
+                    <li>
+                        <button onClick={confirmUser}>Confirm User</button>
+                    </li>
+                    <li>
+                        <button onClick={resendCode}>Resend Code</button>
+                    </li>
+                </ul>
+            )}
         </main>
     );
+
+    /*
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={isAuthenticated() ? <Navigate replace to="/home" /> : <Navigate replace to="/login" />} />
+                <Route path="/login" element={<LoginPage />} />
+                <Route path="/confirm" element={<ConfirmUserPage />} />
+                <Route path="/home" element={isAuthenticated() ? <HomePage /> : <Navigate replace to="/login" />} />
+            </Routes>
+        </BrowserRouter>
+    );
+    */
 }

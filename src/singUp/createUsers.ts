@@ -55,17 +55,14 @@ export class CreateAppUser {
                 // } catch (errorCodeDelelivery) {
                 //     console.log("Error - AttributeName : " + errorCodeDelelivery);
                 // }
+                return "CREATE: OK";
+            } else {
+                return "CREATE: NG";
             }
-
-            return {
-                message: null,
-            };
         } catch (err) {
             console.log(`Failed :  ${familyName} + ${givenName} `);
             console.log("Error : " + err);
-            return {
-                message: "Creation : Failed",
-            };
+            return "CREATE: NG";
         }
     }
 }
