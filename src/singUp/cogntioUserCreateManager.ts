@@ -70,7 +70,6 @@ class CognitoUserManager {
                 givenName: "Mahbubar",
                 familyName: "Rahman",
             });
-
             console.log("User created successfully:", result);
         } catch (error) {
             console.error("Failed to create user:", error);

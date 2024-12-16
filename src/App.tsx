@@ -4,10 +4,10 @@ import { useAuthenticator } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/data";
 //import { GetListUser } from "./singUp/listUsers";
 import { CreateAppUser } from "./singUp/createUsers";
-// import { ACCOUNT_REGION } from "./singUp/constants";
+import { ACCOUNT_REGION } from "./singUp/constants";
 //import { USER_POOL, CLIENT_ID } from "./singUp/constants";
 import { confirmSignUp } from "./singUp/confirmSignUp";
-// import CognitoUserManager from "./singUp/cogntioUserCreateManager";
+import CognitoUserManager from "./singUp/cogntioUserCreateManager";
 //import CognitoAuthService from "./singUp/cognitoAuthService";
 import { TEMP_EMAIL_ID } from "./singUp/constants";
 //import { generatePassword } from "./utilities/utility";
@@ -168,6 +168,15 @@ export default function App() {
         });
     };
 
+    const createUserByAdmin = async () => {
+        try {
+            const userManager = new CognitoUserManager(ACCOUNT_REGION);
+            await userManager.exampleUserCreation();
+        } catch {
+            console.log("Error: admin create User");
+        }
+    };
+
     return (
         <main>
             <h1>{name}</h1>
@@ -196,6 +205,10 @@ export default function App() {
                     </li>
                     <li>
                         <button onClick={resendCode}>Resend Code</button>
+                    </li>
+
+                    <li>
+                        <button onClick={createUserByAdmin}>Create User By Admin</button>
                     </li>
                 </ul>
             )}
