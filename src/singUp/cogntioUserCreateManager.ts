@@ -49,11 +49,9 @@ class CognitoUserManager {
             // Execute user creation command
             const command = new AdminCreateUserCommand(input);
             const response = await this.client.send(command);
-
             return response;
         } catch (error) {
             console.error("Error creating user in Cognito:", error);
-            throw error;
         }
     }
 
