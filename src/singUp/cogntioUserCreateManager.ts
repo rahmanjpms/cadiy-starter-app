@@ -51,7 +51,8 @@ class CognitoUserManager {
             const response = await this.client.send(command);
             return response;
         } catch (error) {
-            console.error("Error creating user in Cognito:", error);
+            console.log("Error creating user in Cognito: \n" + error);
+            return null;
         }
     }
 
@@ -68,9 +69,11 @@ class CognitoUserManager {
                 givenName: "Mahbubar",
                 familyName: "Rahman",
             });
-            console.log("User created successfully:", result);
+
+            if (result) console.log("User created successfully:");
+            else console.log("Failed to create user:");
         } catch (error) {
-            console.error("Failed to create user:", error);
+            console.log("Failed to create user:");
         }
     }
 }
