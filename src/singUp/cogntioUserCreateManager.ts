@@ -1,6 +1,6 @@
 import { CognitoIdentityProviderClient, AdminCreateUserCommand, AdminCreateUserCommandInput } from "@aws-sdk/client-cognito-identity-provider";
 import { TEMP_EMAIL_ID, TEMP_EMAIL_PASSWORD, USER_POOL } from "./constants";
-import { generatePassword } from "../utilities/utility";
+// import { generatePassword } from "../utilities/utility";
 
 // User creation configuration interface
 interface UserCreationConfig {
