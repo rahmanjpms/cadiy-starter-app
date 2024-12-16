@@ -29,12 +29,24 @@ export default function App() {
 
     const [name, setName] = useState<string>("");
 
+    const [hasTodos, setHasTodos] = useState<boolean>(false);
+
     const { user, signOut } = useAuthenticator();
 
     useEffect(() => {
         client.models.Todo.observeQuery().subscribe({
             next: (data) => setTodos([...data.items]),
         });
+
+        if (todos.length > 0) {
+            for (let i = 0; i < todos.length; i++) {
+                const item = todos[i];
+                if (item.content && item.content.trim().length > 0) {
+                    setHasTodos(true);
+                    break;
+                }
+            }
+        }
 
         const loginID = user?.signInDetails?.loginId;
         if (loginID) {
@@ -44,7 +56,7 @@ export default function App() {
                 setName(name);
             }
         }
-    }, [user]);
+    }, [user, todos]);
 
     async function createTodo() {
         client.models.Todo.create({ content: window.prompt("Todo content") });
@@ -179,38 +191,52 @@ export default function App() {
 
     return (
         <main>
-            <h1>{name}</h1>
-            <button onClick={signOut}>Sign out</button>
-            <h1>My todos</h1>
-            <button onClick={createTodo}>+ new</button>
-            <ul>
-                {todos.map((todo) => (
-                    <>
-                        {todo.content && todo.content.length > 0 && (
-                            <li onClick={() => deleteTodo(todo.id)} key={todo.id}>
-                                {todo.content}
-                            </li>
-                        )}
-                    </>
-                ))}
-            </ul>
+            <>
+                <h1>{name}</h1>
+                <button onClick={signOut}>Sign out</button>
+            </>
 
             {name && name.length > 0 && (
-                <ul>
-                    <li>
-                        <button onClick={createUser}>Create User</button>
-                    </li>
-                    <li>
-                        <button onClick={confirmUser}>Confirm User</button>
-                    </li>
-                    <li>
-                        <button onClick={resendCode}>Resend Code</button>
-                    </li>
+                <div>
+                    <div>
+                        <br></br>
+                        <button onClick={createTodo}>+ new</button>
+                        {hasTodos && (
+                            <>
+                                <h1>My todos</h1>
+                                <ul>
+                                    {todos.map((todo) => (
+                                        <>
+                                            {todo.content && todo.content.length > 0 && (
+                                                <li onClick={() => deleteTodo(todo.id)} key={todo.id}>
+                                                    {todo.content}
+                                                </li>
+                                            )}
+                                        </>
+                                    ))}
+                                </ul>
+                            </>
+                        )}
+                    </div>
 
-                    <li>
-                        <button onClick={createUserByAdmin}>Create User By Admin</button>
-                    </li>
-                </ul>
+                    <div>
+                        <ul>
+                            <li>
+                                <button onClick={createUser}>Create User</button>
+                            </li>
+                            <li>
+                                <button onClick={confirmUser}>Confirm User</button>
+                            </li>
+                            <li>
+                                <button onClick={resendCode}>Resend Code</button>
+                            </li>
+
+                            <li>
+                                <button onClick={createUserByAdmin}>Create User By Admin</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             )}
         </main>
     );
