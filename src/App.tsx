@@ -97,6 +97,17 @@ export default function App() {
 
     function deleteTodo(id: string) {
         client.models.Todo.delete({ id });
+
+        setHasTodos(false);
+        if (todos.length > 0) {
+            for (let i = 0; i < todos.length; i++) {
+                const item = todos[i];
+                if (item.content && item.content.trim().length > 0) {
+                    setHasTodos(true);
+                    break;
+                }
+            }
+        }
     }
 
     /**
