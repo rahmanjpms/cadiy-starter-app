@@ -1,7 +1,8 @@
 import { CognitoIdentityProviderClient, SignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
-import { addPreSignUpHandler } from "./updateUserPool";
+//import { addPreSignUpHandler } from "./updateUserPool";
 import { USER_POOL, ACCOUNT_REGION, CLIENT_ID, TEMP_EMAIL_PASSWORD } from "./constants";
 //import { generatePassword } from "../utilities/utility";
+import { updateUserAttributesCommand } from "./updateUserAttributes";
 export class CreateAppUser {
     constructor() {}
 
@@ -19,7 +20,7 @@ export class CreateAppUser {
                 },
                 // {
                 //     Name: "email_verified",
-                //     Value: "true",
+                //     Value: "false",
                 // },
             ],
         };
@@ -30,31 +31,49 @@ export class CreateAppUser {
 
             if (response) {
                 console.log("email_verified :" + response.UserConfirmed);
+                try {
+                    const resultUserUpdaate = updateUserAttributesCommand();
+                    new Promise((resolve) => {
+                        resolve(resultUserUpdaate);
+                    })
+                        .then((msg) => {
+                            const msgValue = msg as string;
+                            if (msgValue === "OK") {
+                                console.log("OK:User Update ......");
+                            }
+                        })
+                        .catch((resonError) => {
+                            console.log(resonError);
+                        });
+                } catch (errUpdUserAttributes) {
+                    console.log("ERROR IN UPDATE USER ATTRIBUTES");
+                }
+
                 // try {
                 //     response.UserConfirmed = true;
                 // } catch {
                 //     console.log("Error in Confirmaiton");
                 // }
 
-                try {
-                    const responseUpdate = await addPreSignUpHandler();
-                    if (responseUpdate) {
-                        console.log("update pool : 成功");
-                    }
-                } catch (errUpdate) {
-                    console.log("Error update pool : " + errUpdate);
-                }
+                // try {
+                //     const responseUpdate = await addPreSignUpHandler();
+                //     if (responseUpdate) {
+                //         console.log("update pool : 成功");
+                //     }
+                // } catch (errUpdate) {
+                //     console.log("Error update pool : " + errUpdate);
+                // }
 
-                try {
-                    if (response.CodeDeliveryDetails) {
-                        const attribute = response.CodeDeliveryDetails.AttributeName;
-                        if (attribute) {
-                            console.log("AttributeName : " + attribute);
-                        }
-                    }
-                } catch (errorCodeDelelivery) {
-                    console.log("Error - AttributeName : " + errorCodeDelelivery);
-                }
+                // try {
+                //     if (response.CodeDeliveryDetails) {
+                //         const attribute = response.CodeDeliveryDetails.AttributeName;
+                //         if (attribute) {
+                //             console.log("AttributeName : " + attribute);
+                //         }
+                //     }
+                // } catch (errorCodeDelelivery) {
+                //     console.log("Error - AttributeName : " + errorCodeDelelivery);
+                // }
                 return "CREATE: OK";
             } else {
                 return "CREATE: NG";
