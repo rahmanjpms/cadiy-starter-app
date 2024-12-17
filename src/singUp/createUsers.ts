@@ -1,5 +1,5 @@
 import { CognitoIdentityProviderClient, SignUpCommand } from "@aws-sdk/client-cognito-identity-provider";
-//import { addPreSignUpHandler } from "./updateUserPool";
+import { addPreSignUpHandler } from "./updateUserPool";
 import { USER_POOL, ACCOUNT_REGION, CLIENT_ID, TEMP_EMAIL_PASSWORD } from "./constants";
 //import { generatePassword } from "../utilities/utility";
 export class CreateAppUser {
@@ -17,10 +17,10 @@ export class CreateAppUser {
                     Name: "email",
                     Value: email,
                 },
-                {
-                    Name: "email_verified",
-                    Value: "true",
-                },
+                // {
+                //     Name: "email_verified",
+                //     Value: "true",
+                // },
             ],
         };
 
@@ -36,25 +36,25 @@ export class CreateAppUser {
                 //     console.log("Error in Confirmaiton");
                 // }
 
-                // try {
-                //     const responseUpdate = await addPreSignUpHandler();
-                //     if (responseUpdate) {
-                //         console.log("update pool : 成功");
-                //     }
-                // } catch (errUpdate) {
-                //     console.log("Error update pool : " + errUpdate);
-                // }
+                try {
+                    const responseUpdate = await addPreSignUpHandler();
+                    if (responseUpdate) {
+                        console.log("update pool : 成功");
+                    }
+                } catch (errUpdate) {
+                    console.log("Error update pool : " + errUpdate);
+                }
 
-                // try {
-                //     if (response.CodeDeliveryDetails) {
-                //         const attribute = response.CodeDeliveryDetails.AttributeName;
-                //         if (attribute) {
-                //             console.log("AttributeName : " + attribute);
-                //         }
-                //     }
-                // } catch (errorCodeDelelivery) {
-                //     console.log("Error - AttributeName : " + errorCodeDelelivery);
-                // }
+                try {
+                    if (response.CodeDeliveryDetails) {
+                        const attribute = response.CodeDeliveryDetails.AttributeName;
+                        if (attribute) {
+                            console.log("AttributeName : " + attribute);
+                        }
+                    }
+                } catch (errorCodeDelelivery) {
+                    console.log("Error - AttributeName : " + errorCodeDelelivery);
+                }
                 return "CREATE: OK";
             } else {
                 return "CREATE: NG";

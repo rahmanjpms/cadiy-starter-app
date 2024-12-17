@@ -20,8 +20,10 @@ export const addPreSignUpHandler = async () => {
         });
 
         const response = await cognitoClient.send(command);
+        console.log("OK...Update");
         return [response, null];
     } catch (err) {
+        console.log("NG...Update");
         return [null, err];
     }
 };
