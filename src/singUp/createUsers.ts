@@ -17,10 +17,10 @@ export class CreateAppUser {
                     Name: "email",
                     Value: email,
                 },
-                // {
-                //     Name: "email_verified",
-                //     Value: "true",
-                // },
+                {
+                    Name: "email_verified",
+                    Value: "true",
+                },
             ],
         };
 
