@@ -22,6 +22,8 @@ import LoginPage from "./loginPage";
 import HomePage from "./homePage";
 import ConfirmUserPage from "./confirmUserPage";
 */
+
+import { adminGetUserHandler } from "./users/getUserInfo";
 const client = generateClient<Schema>();
 
 export default function App() {
@@ -176,6 +178,14 @@ export default function App() {
         }
     };
 
+    const getUserInfo = async () => {
+        try {
+            await adminGetUserHandler();
+        } catch {
+            console.log("Error: admin create User");
+        }
+    };
+
     return (
         <main>
             <>
@@ -217,6 +227,10 @@ export default function App() {
 
                             <li>
                                 <button onClick={createUserByAdmin}>Create User By Admin</button>
+                            </li>
+
+                            <li>
+                                <button onClick={getUserInfo}>User Info</button>
                             </li>
                         </ul>
                     </div>
