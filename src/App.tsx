@@ -10,6 +10,7 @@ import { confirmSignUp } from "./singUp/confirmSignUp";
 import CognitoUserManager from "./singUp/cogntioUserCreateManager";
 //import CognitoAuthService from "./singUp/cognitoAuthService";
 import { TEMP_EMAIL_ID } from "./singUp/constants";
+import { DEBUG_MODE } from "./systemConstants";
 //import { generatePassword } from "./utilities/utility";
 //import { resendConfirmationCode } from "./singUp/resendConfirmationCode";
 
@@ -24,6 +25,7 @@ import ConfirmUserPage from "./confirmUserPage";
 */
 
 import { adminGetUserHandler } from "./users/getUserInfo";
+import { listUsersHandler } from "./users/listUsersCommand";
 const client = generateClient<Schema>();
 
 export default function App() {
@@ -94,7 +96,7 @@ export default function App() {
     const createUser = async () => {
         try {
             const objCreateUser = new CreateAppUser();
-            const createUser = await objCreateUser.createInviteUserMutation(TEMP_EMAIL_ID, "Rahman", "tulu");
+            const createUser = await objCreateUser.createInviteUserMutation(TEMP_EMAIL_ID);
             new Promise((resolve) => {
                 resolve(createUser);
             })
@@ -186,6 +188,13 @@ export default function App() {
         }
     };
 
+    const getUserList = async () => {
+        try {
+            await listUsersHandler();
+        } catch {
+            console.log("Error: Listing User");
+        }
+    };
     return (
         <main>
             <>
@@ -218,12 +227,17 @@ export default function App() {
                             <li>
                                 <button onClick={createUser}>Create User</button>
                             </li>
-                            <li>
-                                <button onClick={confirmUser}>Confirm User</button>
-                            </li>
-                            <li>
-                                <button onClick={resendCode}>Resend Code</button>
-                            </li>
+                            {!DEBUG_MODE && (
+                                <>
+                                    <li>
+                                        <button onClick={confirmUser}>Confirm User</button>
+                                    </li>
+
+                                    <li>
+                                        <button onClick={resendCode}>Resend Code</button>
+                                    </li>
+                                </>
+                            )}
 
                             <li>
                                 <button onClick={createUserByAdmin}>Create User By Admin</button>
@@ -231,6 +245,10 @@ export default function App() {
 
                             <li>
                                 <button onClick={getUserInfo}>User Info</button>
+                            </li>
+
+                            <li>
+                                <button onClick={getUserList}>User List</button>
                             </li>
                         </ul>
                     </div>

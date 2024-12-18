@@ -117,7 +117,7 @@ const SignUpComponent: React.FC = () => {
         try {
             const objCreateUser = new CreateAppUser();
 
-            const result = await objCreateUser.createInviteUserMutation(formState.email, "Rahman", "tulu");
+            const result = await objCreateUser.createInviteUserMutation(formState.email);
             new Promise((resolve) => {
                 resolve(result);
             })

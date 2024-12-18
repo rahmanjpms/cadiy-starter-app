@@ -6,7 +6,7 @@ import { updateUserAttributesCommand } from "./updateUserAttributes";
 export class CreateAppUser {
     constructor() {}
 
-    public async createInviteUserMutation(email: string, familyName: string, givenName: string) {
+    public async createInviteUserMutation(email: string) {
         const client = new CognitoIdentityProviderClient({ region: ACCOUNT_REGION });
         const input = {
             ClientId: CLIENT_ID,
@@ -28,7 +28,6 @@ export class CreateAppUser {
         try {
             const command = new SignUpCommand(input);
             const response = await client.send(command);
-
             if (response) {
                 console.log("email_verified :" + response.UserConfirmed);
                 try {
@@ -79,8 +78,7 @@ export class CreateAppUser {
                 return "CREATE: NG";
             }
         } catch (err) {
-            console.log(`Failed :  ${familyName} + ${givenName} `);
-            console.log("Error : " + err);
+            console.log("ERROR SignUpCommand \n" + err);
             return "CREATE: NG";
         }
     }
